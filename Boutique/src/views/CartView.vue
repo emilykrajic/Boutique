@@ -58,16 +58,60 @@ const products = [
     badge: 'New',
     img: 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=400&h=500&fit=crop',
   },
+  {
+    id: 3,
+    name: 'Pearl Knit Top',
+    price: 52,
+    badge: null,
+    img: 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=400&h=500&fit=crop',
+  },
+  {
+    id: 4,
+    name: 'Velvet Mini Skirt',
+    price: 76,
+    badge: 'Sale',
+    img: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=500&fit=crop',
+  },
+  {
+    id: 5,
+    name: 'Satin Wrap Blouse',
+    price: 61,
+    badge: 'New',
+    img: 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=400&h=500&fit=crop',
+  },
+  {
+    id: 3,
+    name: 'Pearl Knit Top',
+    price: 52,
+    badge: null,
+    img: 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=400&h=500&fit=crop',
+  },
+  {
+    id: 4,
+    name: 'Velvet Mini Skirt',
+    price: 76,
+    badge: 'Sale',
+    img: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=500&fit=crop',
+  },
+  {
+    id: 5,
+    name: 'Satin Wrap Blouse',
+    price: 61,
+    badge: 'New',
+    img: 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=400&h=500&fit=crop',
+  },
 ];
 </script>
 
 <style scoped>
 .cart-page {
   padding: 40px;
+  padding-bottom: 0;
+  background: #fffbfb;
 }
 .back-link {
   font-size: 0.95rem;
-  color: #5c4033;
+  color: #2f2925;
   text-decoration: none;
   display: inline-block;
   margin-bottom: 24px;
@@ -75,36 +119,53 @@ const products = [
 .cart-title {
   font-family: 'Dancing Script', cursive;
   font-size: 3rem;
-  color: #8b6347;
+  color: #2f2925;
   margin-bottom: 24px;
 }
 .divider {
   border: none;
-  border-top: 1px solid #d4b896;
+  border-top: 1px solid #2f2925;
   margin-bottom: 32px;
 }
 .empty {
-  color: #c4a882;
+  color: #2f2925;
   margin-bottom: 40px;
 }
 .fav-title {
   font-family: 'Dancing Script', cursive;
   font-size: 2.5rem;
-  color: #8b6347;
+  color: #2f2925;
   margin-bottom: 24px;
 }
+.product-info span {
+  color: #2f2925;
+}
 .fav-grid {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 16px;
+  display: flex;
+  overflow-x: auto;
+  scrollbar-width: none;
+  gap: 12px;
+  padding-bottom: 40px;
+}
+.fav-grid::-webkit-scrollbar {
+  display: none;
 }
 .product-card {
-  cursor: pointer;
+  min-width: 130px;
+  flex-shrink: 0;
 }
 .img-wrap {
   position: relative;
-  aspect-ratio: 3/4;
+  aspect-ratio: 2/3;
   overflow: hidden;
+  width: 100%;
+}
+.img-wrap {
+  position: relative;
+  aspect-ratio: 2/3;
+  overflow: hidden;
+  width: 100%;
+  max-height: 180px;
 }
 .img-wrap img {
   width: 100%;
@@ -119,7 +180,7 @@ const products = [
   position: absolute;
   top: 12px;
   left: 12px;
-  background: #8b6347;
+  background: #fffbfb;
   color: white;
   font-size: 0.75rem;
   padding: 4px 12px;
@@ -132,6 +193,17 @@ const products = [
   font-size: 1rem;
 }
 .price {
-  color: #8b6347;
+  color: #2f2925;
+}
+@media (max-width: 768px) {
+  .fav-grid {
+    display: flex;
+    overflow-x: auto;
+    scrollbar-width: none;
+    gap: 12px;
+  }
+  .fav-grid::-webkit-scrollbar {
+    display: none;
+  }
 }
 </style>
