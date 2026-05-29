@@ -4,13 +4,7 @@
     <div class="product-layout">
       <div class="product-img-wrap">
         <div class="img-grid">
-          <img
-            v-for="i in 8"
-            :key="i"
-            :src="product.img"
-            :alt="product.name"
-            @click="enlarged = product.img"
-          />
+          <div v-for="i in 8" :key="i" class="img-box" @click="enlarged = i"></div>
         </div>
       </div>
       <div class="product-details">
@@ -18,22 +12,26 @@
         <h1 class="product-name">{{ product.name }}</h1>
         <p class="product-price">${{ product.price }}</p>
         <p class="product-desc">A beautiful piece crafted with care. Perfect for any occasion.</p>
-        <button class="add-btn">Add to Cart</button>
+        <button class="add-btn" @click="handleAddToCart(product)">Add to Cart</button>
       </div>
     </div>
 
     <div v-if="enlarged" class="lightbox" @click="enlarged = null">
-      <img :src="enlarged" class="lightbox-img" />
+      <div class="lightbox-box"></div>
     </div>
   </main>
 </template>
 
 <script setup>
-import { computed, ref } from 'vue';
-import { useRoute } from 'vue-router';
+import { computed, ref, watch } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+import { useCart } from '../stores/cart';
 
+const { addToCart, viewProduct } = useCart();
 const route = useRoute();
+const router = useRouter();
 const enlarged = ref(null);
+
 const products = [
   {
     id: 1,
@@ -80,6 +78,19 @@ const products = [
 ];
 
 const product = computed(() => products.find((p) => p.id === Number(route.params.id)));
+
+watch(
+  product,
+  (p) => {
+    if (p) viewProduct(p);
+  },
+  { immediate: true },
+);
+
+function handleAddToCart(product) {
+  addToCart(product);
+  router.push('/cart');
+}
 </script>
 
 <style scoped>
@@ -108,6 +119,24 @@ const product = computed(() => products.find((p) => p.id === Number(route.params
   grid-template-columns: 1fr 1fr;
   gap: 8px;
 }
+.img-box {
+  width: 100%;
+  aspect-ratio: 3/4;
+  background: #d4b896;
+  cursor: pointer;
+}
+.img-box:hover {
+  opacity: 0.85;
+}
+.badge {
+  display: inline-block;
+  background: #c7cdab;
+  color: white;
+  font-size: 0.75rem;
+  padding: 4px 12px;
+  border-radius: 20px;
+  width: fit-content;
+}
 .img-grid img {
   width: 100%;
   aspect-ratio: 3/4;
@@ -124,14 +153,6 @@ const product = computed(() => products.find((p) => p.id === Number(route.params
   flex-direction: column;
   gap: 16px;
   padding-top: 20px;
-}
-.badge {
-  display: inline-block;
-  background: #c7cdab;
-  color: white;
-  font-size: 0.75rem;
-  padding: 4px 12px;
-  border-radius: 20px;
 }
 .product-name {
   font-family: 'Dancing Script', cursive;
@@ -164,12 +185,28 @@ const product = computed(() => products.find((p) => p.id === Number(route.params
 .lightbox {
   position: fixed;
   inset: 0;
-  background: rgba(255, 251, 251, 0.85);
+  background: rgba(255, 255, 255, 0.5);
   z-index: 300;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
+}
+.lightbox-box {
+  width: 52vw;
+  height: 93vh;
+  background: #d4b896;
+  cursor: default;
+}
+
+@media (max-width: 768px) {
+  .product-layout {
+    flex-direction: column;
+    gap: 24px;
+  }
+  .product-page {
+    padding: 20px;
+  }
 }
 .lightbox-img {
   max-height: 90vh;

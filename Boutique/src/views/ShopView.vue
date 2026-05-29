@@ -143,12 +143,10 @@ main {
   position: relative;
   aspect-ratio: 3/4;
   overflow: hidden;
+  background: #d4b896;
 }
 .img-wrap img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.4s;
+  display: none;
 }
 .product-card:hover img {
   transform: scale(1.04);

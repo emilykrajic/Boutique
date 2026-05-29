@@ -12,13 +12,25 @@
       <div class="grid-img"></div>
       <div class="grid-img"></div>
     </section>
-    <section class="strip">
+    <section class="strip" ref="strip">
       <div class="strip-track">
-        <div v-for="i in 12" :key="i" class="strip-img"></div>
+        <div v-for="i in 11" :key="i" class="strip-img"></div>
       </div>
     </section>
   </main>
 </template>
+
+<script setup>
+import { ref, onMounted } from 'vue';
+
+const strip = ref(null);
+
+onMounted(() => {
+  const el = strip.value;
+  const scrollMiddle = (el.scrollWidth - el.clientWidth) / 2;
+  el.scrollLeft = scrollMiddle;
+});
+</script>
 
 <style scoped>
 main {
@@ -58,15 +70,18 @@ main {
 }
 .strip {
   overflow-x: auto;
-  border-top: 1px solid #d4b896;
   border-bottom: 1px solid #d4b896;
-  padding: 8px 0;
+  padding: 0 0 8px 0;
   background: #fffbfb;
 }
 .strip-track {
   display: flex;
   gap: 8px;
-  width: max-content;
+}
+.strip-track::before,
+.strip-track::after {
+  content: '';
+  min-width: 2px;
 }
 .strip-img {
   width: 180px;
