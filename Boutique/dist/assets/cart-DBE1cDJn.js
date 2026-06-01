@@ -1,0 +1,1 @@
+import{c as f,r as d}from"./index-k7nYVz-s.js";const n=d([]),a=d([]);function o(){const s=f(()=>a.value.filter(e=>!n.value.find(i=>i.id===e.id)));function u(e){const i=n.value.find(t=>t.id===e.id);i?i.qty++:n.value.push({...e,qty:1})}function r(e){a.value.find(t=>t.id===e.id)||a.value.unshift(e)}return{items:n,addToCart:u,viewProduct:r,recentlyViewed:s}}export{o as u};
