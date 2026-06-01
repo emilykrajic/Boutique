@@ -41,14 +41,17 @@ function sendEmail() {
 </script>
 
 <style scoped>
-main {
-  background: #fffbfb;
-}
 .customs {
+  background: #fffbfb;
+  min-height: 100vh;
   padding: 60px 40px;
+}
+
+.customs > div {
   max-width: 600px;
   margin: 0 auto;
 }
+
 .title {
   font-family: 'Dancing Script', cursive;
   font-size: 3rem;

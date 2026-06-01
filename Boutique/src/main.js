@@ -5,6 +5,9 @@ import './style.css'
 
 const router = createRouter({
   history: createWebHistory(),
+  scrollBehavior() {
+    return { top: 0 }
+  },
   routes: [
     { path: '/', component: () => import('./views/HomeView.vue') },
     { path: '/shop/:category?', component: () => import('./views/ShopView.vue') },
