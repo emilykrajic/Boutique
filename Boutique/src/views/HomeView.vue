@@ -9,8 +9,7 @@
       <div class="grid-img"></div>
       <div class="grid-img"></div>
       <div class="grid-img"></div>
-      <div class="grid-img"></div>
-      <div class="grid-img"></div>
+      <div class="grid-img full-width"></div>
     </section>
     <section class="strip" ref="strip">
       <div class="strip-track">
@@ -68,6 +67,9 @@ main {
   height: 300px;
   background: #d4b896;
 }
+.full-width {
+  display: none;
+}
 .strip {
   overflow-x: auto;
   border-bottom: 1px solid #d4b896;
@@ -89,12 +91,19 @@ main {
   background: #d4b896;
   flex-shrink: 0;
 }
-@keyframes scroll {
-  0% {
-    transform: translateX(0);
+@media (max-width: 768px) {
+  .grid-3x2 {
+    grid-template-columns: repeat(2, 1fr);
   }
-  100% {
-    transform: translateX(-50%);
+  .grid-img {
+    height: auto;
+    aspect-ratio: 1 / 1;
+  }
+  .full-width {
+    display: block;
+    grid-column: 1 / -1;
+    aspect-ratio: 2 / 1;
+    height: auto;
   }
 }
 </style>
