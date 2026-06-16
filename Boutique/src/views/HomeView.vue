@@ -2,9 +2,10 @@
   <main>
     <section class="hero">
       <div class="hero-img"></div>
-      <a href="/shop" class="hero-btn">Shop New Arrivals</a>
+      <router-link to="/new" class="hero-btn">Shop New Arrivals</router-link>
     </section>
     <section class="grid-3x2">
+      <div class="grid-img"></div>
       <div class="grid-img"></div>
       <div class="grid-img"></div>
       <div class="grid-img"></div>
@@ -25,9 +26,10 @@ import { ref, onMounted } from 'vue';
 const strip = ref(null);
 
 onMounted(() => {
-  const el = strip.value;
-  const scrollMiddle = (el.scrollWidth - el.clientWidth) / 2;
-  el.scrollLeft = scrollMiddle;
+  requestAnimationFrame(() => {
+    const el = strip.value;
+    el.scrollLeft = (el.scrollWidth - el.clientWidth) / 2;
+  });
 });
 </script>
 
@@ -60,25 +62,26 @@ main {
 .grid-3x2 {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 300px);
   gap: 8px;
-  padding: 8px;
+  padding: 0px;
 }
 .grid-img {
-  height: 300px;
   background: #d4b896;
-}
-.full-width {
-  display: none;
 }
 .strip {
   overflow-x: auto;
+  scrollbar-width: none;
   border-bottom: 1px solid #d4b896;
-  padding: 0 0 8px 0;
+  padding: 0 0 4px 0;
   background: #fffbfb;
+}
+.strip::-webkit-scrollbar {
+  display: none;
 }
 .strip-track {
   display: flex;
-  gap: 8px;
+  gap: 4px;
 }
 .strip-track::before,
 .strip-track::after {
@@ -93,17 +96,21 @@ main {
 }
 @media (max-width: 768px) {
   .grid-3x2 {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 4px;
+    padding: 4px;
   }
   .grid-img {
+    aspect-ratio: 3 / 4;
     height: auto;
-    aspect-ratio: 1 / 1;
   }
   .full-width {
-    display: block;
-    grid-column: 1 / -1;
-    aspect-ratio: 2 / 1;
-    height: auto;
+    grid-column: unset; /* remove any spanning */
+  }
+  .strip-img {
+    width: 120px;
+    height: 150px;
   }
 }
 </style>

@@ -3,8 +3,13 @@
     <router-link to="/shop" class="back-link">← Continue Shopping</router-link>
     <div class="product-layout">
       <div class="product-img-wrap">
-        <div class="img-grid">
-          <div v-for="i in 8" :key="i" class="img-box" @click="enlarged = i"></div>
+        <div class="main-img">
+          <img :src="activeImg" :alt="product.name" />
+        </div>
+        <div class="thumb-grid">
+          <div v-for="i in 4" :key="i" class="thumb" @click="selectedImg = product.img">
+            <img :src="product.img" :alt="product.name" />
+          </div>
         </div>
       </div>
       <div class="product-details">
@@ -14,10 +19,6 @@
         <p class="product-desc">A beautiful piece crafted with care. Perfect for any occasion.</p>
         <button class="add-btn" @click="handleAddToCart(product)">Add to Cart</button>
       </div>
-    </div>
-
-    <div v-if="enlarged" class="lightbox" @click="enlarged = null">
-      <div class="lightbox-box"></div>
     </div>
   </main>
 </template>
@@ -30,7 +31,7 @@ import { useCart } from '../stores/cart';
 const { addToCart, viewProduct } = useCart();
 const route = useRoute();
 const router = useRouter();
-const enlarged = ref(null);
+const selectedImg = ref(null);
 
 const products = [
   {
@@ -78,11 +79,15 @@ const products = [
 ];
 
 const product = computed(() => products.find((p) => p.id === Number(route.params.id)));
+const activeImg = computed(() => selectedImg.value || product.value?.img);
 
 watch(
   product,
   (p) => {
-    if (p) viewProduct(p);
+    if (p) {
+      viewProduct(p);
+      selectedImg.value = null;
+    }
   },
   { immediate: true },
 );
@@ -113,20 +118,43 @@ function handleAddToCart(product) {
 }
 .product-img-wrap {
   flex: 1;
-}
-.img-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
+  flex-direction: column;
   gap: 8px;
 }
-.img-box {
+.main-img {
   width: 100%;
   aspect-ratio: 3/4;
+  overflow: hidden;
+  background: #d4b896;
+}
+.main-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.thumb-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+.thumb {
+  aspect-ratio: 3/4;
+  overflow: hidden;
   background: #d4b896;
   cursor: pointer;
+  opacity: 0.7;
+  transition: opacity 0.2s;
 }
-.img-box:hover {
-  opacity: 0.85;
+.thumb:hover {
+  opacity: 1;
+}
+.thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 .badge {
   display: inline-block;
@@ -137,16 +165,6 @@ function handleAddToCart(product) {
   border-radius: 20px;
   width: fit-content;
 }
-.img-grid img {
-  width: 100%;
-  aspect-ratio: 3/4;
-  object-fit: cover;
-  cursor: pointer;
-  transition: opacity 0.2s;
-}
-.img-grid img:hover {
-  opacity: 0.85;
-}
 .product-details {
   flex: 1;
   display: flex;
@@ -155,8 +173,8 @@ function handleAddToCart(product) {
   padding-top: 20px;
 }
 .product-name {
-  font-family: 'Dancing Script', cursive;
-  font-size: 3rem;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2rem;
   color: #2f2925;
 }
 .product-price {
@@ -182,38 +200,7 @@ function handleAddToCart(product) {
 .add-btn:hover {
   background: #433a34;
 }
-.lightbox {
-  position: fixed;
-  inset: 0;
-  background: rgba(255, 255, 255, 0.5);
-  z-index: 300;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-}
-.lightbox-box {
-  width: 52vw;
-  height: 93vh;
-  background: #d4b896;
-  cursor: default;
-}
 
-@media (max-width: 768px) {
-  .product-layout {
-    flex-direction: column;
-    gap: 24px;
-  }
-  .product-page {
-    padding: 20px;
-  }
-}
-.lightbox-img {
-  max-height: 90vh;
-  max-width: 90vw;
-  object-fit: contain;
-  border-radius: 0;
-}
 @media (max-width: 768px) {
   .product-layout {
     flex-direction: column;

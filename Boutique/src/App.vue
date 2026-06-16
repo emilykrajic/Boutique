@@ -85,14 +85,20 @@ const menuOpen = ref(false);
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600&family=Cormorant+Garamond:wght@300;400&display=swap');
-* {
+/* * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-}
+} */
 html,
 body {
-  height: 100%;
+  overflow-x: hidden;
+  width: 100%;
+}
+
+#app-wrapper {
+  overflow-x: hidden;
+  width: 100%;
 }
 body {
   font-family: 'Cormorant Garamond', serif;

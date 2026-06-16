@@ -17,7 +17,7 @@ const router = createRouter({
     { path: '/contact', component: () => import('./views/ContactView.vue') },
     { path: '/about', component: () => import('./views/AboutView.vue') },
     { path: '/jobs', component: () => import('./views/JobsView.vue') },
-  ]
+{ path: '/new', component: () => import('./views/New.vue') }  ]
 })
 
 createApp(App).use(router).mount('#app')

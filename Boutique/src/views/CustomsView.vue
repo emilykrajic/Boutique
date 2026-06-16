@@ -12,7 +12,10 @@
         <input type="text" v-model="name" placeholder="Your name" />
         <input type="email" v-model="email" placeholder="Your email" />
         <textarea v-model="message" placeholder="Describe your custom order..."></textarea>
-        <button type="button" @click="sendEmail">Submit Request</button>
+        <p v-if="error" class="error">Something went wrong. Please try again.</p>
+        <button type="button" @click="sendEmail" :disabled="sending">
+          {{ sending ? 'Sending...' : 'Submit Request' }}
+        </button>
       </div>
     </div>
   </main>
@@ -20,23 +23,41 @@
 
 <script setup>
 import { ref } from 'vue';
+import emailjs from '@emailjs/browser';
+
 const name = ref('');
 const email = ref('');
 const message = ref('');
 const sent = ref(false);
+const error = ref(false);
+const sending = ref(false);
 
-function sendEmail() {
-  const subject = encodeURIComponent(`Custom Order Request from ${name.value}`);
-  const body = encodeURIComponent(
-    `Name: ${name.value}\nEmail: ${email.value}\n\nOrder Details:\n${message.value}`,
-  );
-  window.open(
-    `mailto:misswildthingboutique@misswildthingboutique.com?subject=${subject}&body=${body}`,
-  );
-  sent.value = true;
-  name.value = '';
-  email.value = '';
-  message.value = '';
+async function sendEmail() {
+  sending.value = true;
+  error.value = false;
+
+  try {
+    await emailjs.send(
+      'service_plpxyjk',
+      'template_0uqji2t',
+      {
+        from_name: name.value,
+        from_email: email.value,
+        message: `Custom Order Request:\n${message.value}`,
+      },
+      '6px8XSXVuVGUV_pok',
+    );
+
+    sent.value = true;
+    name.value = '';
+    email.value = '';
+    message.value = '';
+  } catch (err) {
+    console.error(err);
+    error.value = true;
+  } finally {
+    sending.value = false;
+  }
 }
 </script>
 
@@ -46,12 +67,10 @@ function sendEmail() {
   min-height: 100vh;
   padding: 60px 40px;
 }
-
 .customs > div {
   max-width: 600px;
   margin: 0 auto;
 }
-
 .title {
   font-family: 'Dancing Script', cursive;
   font-size: 3rem;
@@ -92,6 +111,14 @@ function sendEmail() {
 }
 .form button:hover {
   background: #433a34;
+}
+.form button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+.error {
+  color: #c0392b;
+  font-size: 0.9rem;
 }
 .thankyou {
   text-align: center;
