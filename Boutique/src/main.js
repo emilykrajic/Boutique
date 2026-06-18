@@ -1,10 +1,10 @@
 import { createApp } from 'vue'
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHashHistory } from 'vue-router'
 import App from './App.vue'
 import './style.css'
 
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHashHistory(),
   scrollBehavior() {
     return { top: 0 }
   },
@@ -17,7 +17,8 @@ const router = createRouter({
     { path: '/contact', component: () => import('./views/ContactView.vue') },
     { path: '/about', component: () => import('./views/AboutView.vue') },
     { path: '/jobs', component: () => import('./views/JobsView.vue') },
-{ path: '/new', component: () => import('./views/New.vue') }  ]
+    { path: '/new', component: () => import('./views/New.vue') }
+  ]
 })
 
 createApp(App).use(router).mount('#app')
