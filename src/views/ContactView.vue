@@ -38,12 +38,13 @@ async function sendEmail() {
 
   try {
     await emailjs.send(
-      'service_plpxyjk',
+      'service_13otxuz',
       'template_0uqji2t',
       {
         from_name: name.value,
         from_email: email.value,
         message: message.value,
+        to_email: 'misswildthingboutique@misswildthingboutique.com',
       },
       '6px8XSXVuVGUV_pok',
     );
@@ -53,7 +54,7 @@ async function sendEmail() {
     email.value = '';
     message.value = '';
   } catch (err) {
-    console.error(err);
+    console.error('EmailJS error:', err.status, err.text);
     error.value = true;
   } finally {
     sending.value = false;
