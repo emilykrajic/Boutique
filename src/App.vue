@@ -131,6 +131,7 @@ body {
   display: flex;
   align-items: center;
   text-decoration: none;
+  flex-shrink: 0;
 }
 .logo-img {
   height: 100px;
@@ -139,6 +140,7 @@ body {
 }
 .search {
   flex: 1;
+  min-width: 0;
   max-width: 500px;
   padding: 10px 16px;
   border: 1.5px solid #2f2925;
@@ -153,14 +155,14 @@ body {
   display: flex;
   gap: 12px;
   align-items: center;
+  flex-shrink: 0;
 }
 .cart-icon {
   color: #2f2925;
   text-decoration: none;
   display: flex;
+  flex-shrink: 0;
 }
-
-/* Hamburger button */
 .hamburger {
   display: none;
   flex-direction: column;
@@ -170,6 +172,7 @@ body {
   background: none;
   border: none;
   padding: 4px;
+  flex-shrink: 0;
 }
 .hamburger span {
   display: block;

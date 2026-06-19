@@ -19,7 +19,7 @@
     <hr class="divider" />
 
     <!-- Only show when cart has items -->
-    <template v-if="items.length > 0">
+    <template v-if="recentlyViewed.length > 0">
       <h2 class="fav-title">Recently Viewed</h2>
       <div class="fav-grid">
         <div v-for="product in recentlyViewed" :key="product.id" class="product-card">
