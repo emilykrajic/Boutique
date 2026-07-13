@@ -22,7 +22,12 @@
     <template v-if="recentlyViewed.length > 0">
       <h2 class="fav-title">Recently Viewed</h2>
       <div class="fav-grid">
-        <div v-for="product in recentlyViewed" :key="product.id" class="product-card">
+        <div
+          v-for="product in recentlyViewed"
+          :key="product.id"
+          class="product-card"
+          @click="openProduct(product)"
+        >
           <div class="img-wrap">
             <span v-if="product.badge" class="badge">{{ product.badge }}</span>
           </div>
@@ -37,7 +42,12 @@
 
     <h2 class="fav-title">Our Favorites</h2>
     <div class="fav-grid">
-      <div v-for="product in products" :key="product.id" class="product-card">
+      <div
+        v-for="product in products"
+        :key="product.id"
+        class="product-card"
+        @click="openProduct(product)"
+      >
         <div class="img-wrap">
           <span v-if="product.badge" class="badge">{{ product.badge }}</span>
         </div>
@@ -51,7 +61,10 @@
 </template>
 
 <script setup>
+import { useRouter } from 'vue-router';
 import { useCart } from '../stores/cart';
+
+const router = useRouter();
 const { items, recentlyViewed } = useCart();
 
 const products = [
@@ -61,13 +74,17 @@ const products = [
   { id: 4, name: 'Velvet Mini Skirt', price: 76, badge: 'Sale' },
   { id: 5, name: 'Satin Wrap Blouse', price: 61, badge: 'New' },
   { id: 6, name: 'Denim Wide Leg', price: 88, badge: null },
-  { id: 1, name: 'Rosette Slip Dress', price: 68, badge: 'New' },
-  { id: 2, name: 'Linen Co-ord Set', price: 94, badge: 'Bestseller' },
-  { id: 3, name: 'Pearl Knit Top', price: 52, badge: null },
-  { id: 4, name: 'Velvet Mini Skirt', price: 76, badge: 'Sale' },
-  { id: 5, name: 'Satin Wrap Blouse', price: 61, badge: 'New' },
-  { id: 6, name: 'Denim Wide Leg', price: 88, badge: null },
+  { id: 7, name: 'Rosette Slip Dress', price: 68, badge: 'New' },
+  { id: 8, name: 'Linen Co-ord Set', price: 94, badge: 'Bestseller' },
+  { id: 9, name: 'Pearl Knit Top', price: 52, badge: null },
+  { id: 10, name: 'Velvet Mini Skirt', price: 76, badge: 'Sale' },
+  { id: 11, name: 'Satin Wrap Blouse', price: 61, badge: 'New' },
+  { id: 12, name: 'Denim Wide Leg', price: 88, badge: null },
 ];
+
+function openProduct(product) {
+  router.push(`/product/${product.id}`);
+}
 </script>
 
 <style scoped>
@@ -151,6 +168,7 @@ const products = [
 .product-card {
   min-width: 160px;
   flex-shrink: 0;
+  cursor: pointer;
 }
 .img-wrap {
   position: relative;

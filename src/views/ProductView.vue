@@ -21,7 +21,11 @@
         <span v-if="product.badge" class="badge">{{ product.badge }}</span>
         <h1 class="product-name">{{ product.name }}</h1>
         <p class="product-price">${{ product.price }}</p>
-        <p class="product-desc">A beautiful piece crafted with care. Perfect for any occasion.</p>
+        <p class="product-desc">
+          {{
+            product.description || 'A beautiful piece crafted with care. Perfect for any occasion.'
+          }}
+        </p>
         <button class="add-btn" @click="handleAddToCart(product)">Add to Cart</button>
       </div>
     </div>
@@ -32,6 +36,7 @@
 import { computed, ref, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useCart } from '../stores/cart';
+import { products } from './ShopView.vue';
 
 const { addToCart, viewProduct } = useCart();
 const route = useRoute();
@@ -39,21 +44,6 @@ const router = useRouter();
 
 const thumbColors = ['#d4b896', '#c7cdab', '#a98c73', '#8a9a7e', '#e0c9a6'];
 const activeColor = ref(thumbColors[0]);
-
-const products = [
-  { id: 1, name: 'Rosette Slip Dress', price: 68, badge: 'New' },
-  { id: 2, name: 'Linen Co-ord Set', price: 94, badge: 'Bestseller' },
-  { id: 3, name: 'Pearl Knit Top', price: 52, badge: null },
-  { id: 4, name: 'Velvet Mini Skirt', price: 76, badge: 'Sale' },
-  { id: 5, name: 'Satin Wrap Blouse', price: 61, badge: 'New' },
-  { id: 6, name: 'Denim Wide Leg', price: 88, badge: null },
-  { id: 7, name: 'Rosette Slip Dress', price: 68, badge: 'New' },
-  { id: 8, name: 'Linen Co-ord Set', price: 94, badge: 'Bestseller' },
-  { id: 9, name: 'Pearl Knit Top', price: 52, badge: null },
-  { id: 10, name: 'Velvet Mini Skirt', price: 76, badge: 'Sale' },
-  { id: 11, name: 'Satin Wrap Blouse', price: 61, badge: 'New' },
-  { id: 12, name: 'Denim Wide Leg', price: 88, badge: null },
-];
 
 const product = computed(() => products.find((p) => p.id === Number(route.params.id)));
 
