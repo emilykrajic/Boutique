@@ -221,6 +221,7 @@ main {
   overflow: hidden;
   background: #d4b896;
 }
+
 .img-wrap img {
   width: 100%;
   height: 100%;

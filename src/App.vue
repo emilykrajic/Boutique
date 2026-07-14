@@ -58,8 +58,6 @@
                 View all results for "{{ searchQuery.trim() }}"
               </li>
             </template>
-
-            <li v-else class="search-status">No items found for "{{ searchQuery.trim() }}"</li>
           </ul>
         </div>
 
@@ -299,6 +297,7 @@ body {
   padding: 4px 16px;
   background: #fffbfb;
   gap: 8px;
+  border-bottom: 1px solid #2f2925;
 }
 .logo-link {
   display: flex;
@@ -443,12 +442,10 @@ body {
   transform: translateY(-6.5px) rotate(-45deg);
 }
 
-/* Desktop nav */
 .category-nav {
   display: flex;
   justify-content: center;
   background: #fffbfb;
-  border-top: 1px solid #2f2925;
   border-bottom: 1px solid #2f2925;
 }
 .category-nav a {
@@ -463,7 +460,6 @@ body {
   font-weight: 600;
 }
 
-/* Mobile drawer */
 .mobile-menu {
   display: none;
   flex-direction: column;

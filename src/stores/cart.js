@@ -8,12 +8,14 @@ export function useCart() {
     _recentlyViewed.value.filter(p => !items.value.find(i => i.id === p.id))
   )
 
-  function addToCart(product) {
-    const existing = items.value.find(i => i.id === product.id)
+  function addToCart(product, size = null) {
+    const existing = items.value.find(
+      i => i.id === product.id && i.size === size
+    )
     if (existing) {
       existing.qty++
     } else {
-      items.value.push({ ...product, qty: 1 })
+      items.value.push({ ...product, size, qty: 1 })
     }
   }
 

@@ -10,6 +10,7 @@
         <div class="cart-img"></div>
         <div class="cart-info">
           <span class="item-name">{{ item.name }}</span>
+          <span v-if="item.size" class="item-size">Size: {{ item.size }}</span>
           <span class="item-price">${{ item.price }}</span>
           <span class="item-qty">Qty: {{ item.qty }}</span>
         </div>
@@ -88,6 +89,10 @@ function openProduct(product) {
 </script>
 
 <style scoped>
+.item-size {
+  color: #433a34;
+  font-size: 0.85rem;
+}
 .cart-page {
   padding: 40px;
   background: #fffbfb;
