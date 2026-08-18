@@ -52,7 +52,7 @@
 <script setup>
 import { computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import { products } from './ShopView.vue';
+import { products } from '../products.js';
 import { buildSearchIndex, searchProducts, getSuggestedProducts } from '../utils/search.js';
 
 const route = useRoute();
