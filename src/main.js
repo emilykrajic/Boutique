@@ -11,14 +11,13 @@ const router = createRouter({
   routes: [
   { path: '/', component: () => import('./views/HomeView.vue') },
   { path: '/search', name: 'search', component: () => import('./views/SearchResults.vue') },
-  { path: '/shop/:category?', component: () => import('./views/ShopView.vue') },
+  { path: '/shop/:category?/:subcategory?', component: () => import('./views/ShopView.vue') },
   { path: '/product/:id', name: 'product', component: () => import('./views/ProductView.vue') },
   { path: '/cart', component: () => import('./views/CartView.vue') },
   { path: '/customs', component: () => import('./views/CustomsView.vue') },
   { path: '/contact', component: () => import('./views/ContactView.vue') },
   { path: '/about', component: () => import('./views/AboutView.vue') },
   { path: '/jobs', component: () => import('./views/JobsView.vue') },
-  { path: '/new', component: () => import('./views/New.vue') }
 ]
 })
 

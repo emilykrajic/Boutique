@@ -1,107 +1,8 @@
-<script>
-// Exported so other files (App.vue's search dropdown, ProductView.vue)
-// can all import this same list instead of duplicating it.
-// This is the ONE place to edit your catalog.
-//
-// Fields used by search: name, description, category, color, tags.
-// Add these to each product below for search to actually find it —
-// they're optional, but the more you fill in, the better search works.
-export const products = [
-  {
-    id: 1,
-    name: 'Rosette Slip Dress',
-    price: 68,
-    badge: 'New',
-    img: 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=400&h=500&fit=crop',
-    // description: '',
-    // category: '',
-    // color: '',
-    // tags: [],
-  },
-  {
-    id: 2,
-    name: 'Linen Co-ord Set',
-    price: 94,
-    badge: 'Bestseller',
-    img: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=500&fit=crop',
-  },
-  {
-    id: 3,
-    name: 'Pearl Knit Top',
-    price: 52,
-    badge: null,
-    img: 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=400&h=500&fit=crop',
-  },
-  {
-    id: 4,
-    name: 'Velvet Mini Skirt',
-    price: 76,
-    badge: 'Sale',
-    img: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=500&fit=crop',
-  },
-  {
-    id: 5,
-    name: 'Satin Wrap Blouse',
-    price: 61,
-    badge: 'New',
-    img: 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=400&h=500&fit=crop',
-  },
-  {
-    id: 6,
-    name: 'Denim Wide Leg',
-    price: 88,
-    badge: null,
-    img: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=500&fit=crop',
-  },
-  {
-    id: 7,
-    name: 'Rosette Slip Dress',
-    price: 68,
-    badge: 'New',
-    img: 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=400&h=500&fit=crop',
-  },
-  {
-    id: 8,
-    name: 'Linen Co-ord Set',
-    price: 94,
-    badge: 'Bestseller',
-    img: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=500&fit=crop',
-  },
-  {
-    id: 9,
-    name: 'Pearl Knit Top',
-    price: 52,
-    badge: null,
-    img: 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=400&h=500&fit=crop',
-  },
-  {
-    id: 10,
-    name: 'Velvet Mini Skirt',
-    price: 76,
-    badge: 'Sale',
-    img: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=500&fit=crop',
-  },
-  {
-    id: 11,
-    name: 'Satin Wrap Blouse',
-    price: 61,
-    badge: 'New',
-    img: 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=400&h=500&fit=crop',
-  },
-  {
-    id: 12,
-    name: 'Denim Wide Leg',
-    price: 88,
-    badge: null,
-    img: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=500&fit=crop',
-  },
-];
-</script>
-
 <script setup>
 import { computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useCart } from '../stores/cart';
+import { products } from '../products.js';
 import { buildSearchIndex, searchProducts, getSuggestedProducts } from '../utils/search.js';
 
 const route = useRoute();
@@ -112,13 +13,55 @@ const { viewProduct } = useCart();
 // matches instead of showing the full catalog — so search results and
 // normal browsing are literally the same view, not a separate lookalike.
 const searchQuery = computed(() => (typeof route.query.q === 'string' ? route.query.q.trim() : ''));
+const isSearching = computed(() => searchQuery.value.length > 0);
 
 const searchIndex = buildSearchIndex(products);
 
-const isSearching = computed(() => searchQuery.value.length > 0);
+// Products scoped to whichever category tab we're on (e.g. /shop/accessories,
+// /shop/tops, /shop/dresses, /shop/pants, /shop/skirts). Each product now
+// has its own real category, so this is a direct match — no mapping needed.
+// If there's no category param (just /shop), show everything.
+// When a subcategory is also present in the route (e.g. /shop/accessories/jewelry),
+// narrow further to just that group.
+const categoryProducts = computed(() => {
+  const routeCategory = route.params.category;
+  const routeSubcategory = route.params.subcategory;
+
+  let list = routeCategory ? products.filter((p) => p.category === routeCategory) : products;
+
+  if (routeSubcategory) {
+    list = list.filter((p) => p.subcategory === routeSubcategory);
+  }
+
+  return list;
+});
+
+// The fixed set of accessory subcategories to show as tabs, regardless of
+// whether products exist for each one yet. Add/remove entries here as your
+// accessory lineup grows — this list drives the tab row directly.
+const ACCESSORY_SUBCATEGORIES = [
+  'bags',
+  'belts',
+  'bracelets',
+  'buttons',
+  'earrings',
+  'hats',
+  'necklaces',
+  'scarves',
+  'sunglasses',
+];
+
+const subcategories = computed(() => {
+  if (route.params.category !== 'accessories') return [];
+  return ACCESSORY_SUBCATEGORIES;
+});
+
+function subcategoryLabel(subcat) {
+  return subcat.charAt(0).toUpperCase() + subcat.slice(1);
+}
 
 const matches = computed(() =>
-  isSearching.value ? searchProducts(searchIndex, searchQuery.value) : products,
+  isSearching.value ? searchProducts(searchIndex, searchQuery.value) : categoryProducts.value,
 );
 
 const suggestions = computed(() =>
@@ -141,6 +84,20 @@ function openProduct(product) {
 
 <template>
   <main class="shop">
+    <nav v-if="subcategories.length && !isSearching" class="subcategory-nav">
+      <router-link :to="`/shop/${route.params.category}`" class="subcategory-link">
+        All
+      </router-link>
+      <router-link
+        v-for="subcat in subcategories"
+        :key="subcat"
+        :to="`/shop/${route.params.category}/${subcat}`"
+        class="subcategory-link"
+      >
+        {{ subcategoryLabel(subcat) }}
+      </router-link>
+    </nav>
+
     <template v-if="isSearching">
       <h1 v-if="matches.length" class="page-title">Results for "{{ searchQuery }}"</h1>
       <p v-if="matches.length" class="page-count">
@@ -181,7 +138,44 @@ main {
   background: #fffbfb;
 }
 .shop {
-  padding: 40px;
+  padding: 20px 40px 40px;
+}
+.subcategory-nav {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 0;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #2f2925;
+  padding-bottom: 10px;
+}
+.subcategory-link {
+  padding: 4px 10px;
+  font-size: 0.95rem;
+  color: #2f2925;
+  text-decoration: none;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+  flex-shrink: 1;
+}
+.subcategory-link:hover,
+.subcategory-link.router-link-exact-active {
+  font-weight: 600;
+}
+@media (max-width: 768px) {
+  .subcategory-nav {
+    border-bottom-width: 2px;
+  }
+  .subcategory-link {
+    font-size: 0.85rem;
+    padding: 3px 6px;
+  }
+}
+@media (max-width: 480px) {
+  .subcategory-nav {
+    border-bottom-width: 3px;
+  }
 }
 .page-title {
   font-family: 'Cormorant Garamond', serif;

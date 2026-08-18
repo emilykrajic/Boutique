@@ -95,20 +95,19 @@
 
       <!-- Desktop nav -->
       <nav class="category-nav">
-        <router-link to="/shop/tops">Tops</router-link>
-        <router-link to="/shop/pants">Pants</router-link>
-        <router-link to="/shop/skirts">Skirts</router-link>
-        <router-link to="/shop/dresses">Dresses</router-link>
         <router-link to="/shop/accessories">Accessories</router-link>
+        <!-- <router-link to="/shop/tops">Tops</router-link> -->
+        <!-- <router-link to="/shop/dresses">Dresses</router-link> -->
+        <!-- <router-link to="/shop/pants">Bottoms</router-link> -->
         <router-link to="/customs">Customs</router-link>
       </nav>
 
       <!-- Mobile drawer -->
       <nav class="mobile-menu" :class="{ open: menuOpen }" @click="menuOpen = false">
-        <router-link to="/shop/tops">Tops</router-link>
-        <router-link to="/shop/pants">Pants</router-link>
-        <router-link to="/shop/skirts">Skirts</router-link>
-        <router-link to="/shop/dresses">Dresses</router-link>
+        <!-- <router-link to="/shop/tops">Tops</router-link> -->
+        <!-- <router-link to="/shop/pants">Pants</router-link> -->
+        <!-- <router-link to="/shop/skirts">Skirts</router-link> -->
+        <!-- <router-link to="/shop/dresses">Dresses</router-link> -->
         <router-link to="/shop/accessories">Accessories</router-link>
         <router-link to="/customs">Customs</router-link>
       </nav>
@@ -136,7 +135,7 @@
 <script setup>
 import { ref, computed, watch, onBeforeUnmount, onMounted } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
-import { products } from './views/ShopView.vue';
+import { products } from './products.js';
 import { buildSearchIndex, searchProducts } from './utils/search.js';
 
 const menuOpen = ref(false);
@@ -456,7 +455,7 @@ body {
   letter-spacing: 0.05em;
 }
 .category-nav a:hover,
-.category-nav a.router-link-active {
+.category-nav a.router-link-exact-active {
   font-weight: 600;
 }
 
@@ -485,7 +484,7 @@ body {
   border-bottom: none;
 }
 .mobile-menu a:hover,
-.mobile-menu a.router-link-active {
+.mobile-menu a.router-link-exact-active {
   background: #f5f0eb;
   font-weight: 600;
 }
@@ -516,7 +515,7 @@ body {
 
 @media (max-width: 768px) {
   .category-nav {
-    display: none;
+    border-bottom: 0px solid #2f2925;
   }
   .hamburger {
     display: flex;
@@ -541,6 +540,9 @@ body {
     padding: 4px 8px;
     gap: 4px;
   }
+  .category-nav {
+    display: none;
+  }
   .logo-img {
     height: 50px;
   }
@@ -563,6 +565,9 @@ body {
   .footer p {
     font-size: 0.78rem;
   }
+  .category-nav {
+    display: none;
+  }
 }
 
 @media (max-width: 480px) {
@@ -573,6 +578,9 @@ body {
   }
   .footer-links span {
     display: none;
+  }
+  .category-nav {
+    border-bottom: 0px solid #2f2925;
   }
 }
 </style>

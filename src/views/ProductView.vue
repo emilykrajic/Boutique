@@ -98,7 +98,7 @@
 import { computed, ref, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useCart } from '../stores/cart';
-import { products } from './ShopView.vue';
+import { products } from '../products.js';
 
 const { addToCart, viewProduct } = useCart();
 const route = useRoute();
