@@ -80,26 +80,25 @@
             </svg>
           </router-link>
           <!-- Hamburger button (mobile only) -->
-          <button
+          <!-- <!-- <button
             class="hamburger"
             :class="{ open: menuOpen }"
             @click="menuOpen = !menuOpen"
             aria-label="Menu"
-          >
+          > 
             <span></span>
             <span></span>
             <span></span>
-          </button>
+          </button> -->
         </div>
       </header>
 
       <!-- Desktop nav -->
       <nav class="category-nav">
-        <router-link to="/shop/accessories">Accessories</router-link>
+        <!-- <router-link to="/shop/accessories">Accessories</router-link> -->
         <!-- <router-link to="/shop/tops">Tops</router-link> -->
         <!-- <router-link to="/shop/dresses">Dresses</router-link> -->
         <!-- <router-link to="/shop/pants">Bottoms</router-link> -->
-        <router-link to="/customs">Customs</router-link>
       </nav>
 
       <!-- Mobile drawer -->
@@ -108,8 +107,7 @@
         <!-- <router-link to="/shop/pants">Pants</router-link> -->
         <!-- <router-link to="/shop/skirts">Skirts</router-link> -->
         <!-- <router-link to="/shop/dresses">Dresses</router-link> -->
-        <router-link to="/shop/accessories">Accessories</router-link>
-        <router-link to="/customs">Customs</router-link>
+        <!-- <router-link to="/shop/accessories">Accessories</router-link> -->
       </nav>
     </div>
 
@@ -122,6 +120,8 @@
         <router-link to="/contact">Contact Us</router-link>
         <span>·</span>
         <router-link to="/about">About Us</router-link>
+        <span>·</span>
+        <router-link to="/customs">Customs</router-link>
         <span>·</span>
         <router-link to="/jobs">Job Opportunities</router-link>
         <span>·</span>
@@ -441,7 +441,7 @@ body {
   transform: translateY(-6.5px) rotate(-45deg);
 }
 
-.category-nav {
+/* .category-nav {
   display: flex;
   justify-content: center;
   background: #fffbfb;
@@ -453,6 +453,26 @@ body {
   color: #2f2925;
   text-decoration: none;
   letter-spacing: 0.05em;
+} */
+.category-nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 500px;
+  width: 100%;
+  box-sizing: border-box;
+  background: #fffbfb;
+  border-bottom: 1px solid #2f2925;
+}
+.category-nav a {
+  flex: 0 1 auto;
+  text-align: center;
+  padding: 12px clamp(10px, 4vw, 20px);
+  font-size: clamp(0.9rem, 2.5vw, 1.2rem);
+  color: #2f2925;
+  text-decoration: none;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
 }
 .category-nav a:hover,
 .category-nav a.router-link-exact-active {

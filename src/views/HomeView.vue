@@ -2,7 +2,7 @@
   <main>
     <section class="hero">
       <div class="hero-img"></div>
-      <router-link to="/new" class="hero-btn">Shop New Arrivals</router-link>
+      <router-link to="/shop/accessories" class="hero-btn">Shop New Arrivals</router-link>
     </section>
     <section class="grid-3x2">
       <div class="grid-img"></div>
